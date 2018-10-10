@@ -38,17 +38,29 @@ void scpassive(float passivef[4][2], float (*scez)[4][4])
 }
 void ragnarParams(float x[8], float (*parameter)[4][8])
 {
+
+    //This is a first attempt and the calibration results are to be hard coded 
+    float axoff[4] = {0.002560630410027, 0.007763510735409, -0.006594553620469,
+                     -0.000600044264199};
+
+    float ayoff[4] = {0.003728831051178, 0.004399368285463, 0.004200014859531,
+                      0.002670164837209}; 
+    
+    float alphaoff[4] = {0.051742929564577, -0.001991210100304, 
+                         0.038533274830325, 0.051764157170956};
+    float betaoff[4] = {-0.017970056331311, -0.051811812995656, 
+                        -0.015059011075560, -0.020272267321578};
     float ax[4];
-    ax[0] = x[0];
-    ax[1] = -x[0];
-    ax[2] = -x[0];
-    ax[3] = x[0];
+    ax[0] = x[0] + axoff[0];
+    ax[1] = -(x[0] + axoff[1]);
+    ax[2] = -(x[0] + axoff[2]);
+    ax[3] = x[0] + axoff[3];
     
     float ay[4];
-    ay[0] = x[1];
-    ay[1] = x[1];
-    ay[2] = -x[1];
-    ay[3] = -x[1];
+    ay[0] = x[1] + ayoff[0];
+    ay[1] = x[1] + ayoff[1];
+    ay[2] = -(x[1] + ayoff[2]);
+    ay[3] = -(x[1] + ayoff[3]);
     
     
     float gama = x[7];
@@ -63,16 +75,16 @@ void ragnarParams(float x[8], float (*parameter)[4][8])
     gamma[3] = -gamma[0];
     
     float alpha[4];
-    alpha[0] = -x[2];
-    alpha[1] = x[2];
-    alpha[2] = -x[2];
-    alpha[3] = x[2];
+    alpha[0] = -(x[2] + alphaoff[0]);
+    alpha[1] = x[2] + alphaoff[1];
+    alpha[2] = -(x[2] + alphaoff[2]);
+    alpha[3] = x[2] + alphaoff[3];
 
     float beta[4]; 
-    beta[0] = -x[3];
-    beta[1] = x[3];
-    beta[2] = x[3];
-    beta[3] = -x[3];
+    beta[0] = -(x[3] + betaoff[0]);
+    beta[1] = x[3] + betaoff[1];
+    beta[2] = x[3] + betaoff[2];
+    beta[3] = -(x[3] + betaoff[3]);
 
     for(int i=0;i<4;i++){
         (*parameter)[i][0] = ax[i];
